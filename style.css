@@ -17,6 +17,10 @@
     --accent-orange: #f97583;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
@@ -229,6 +233,18 @@ section {
     padding: 50px;
     border-radius: 12px;
     position: relative;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 section::before {
@@ -432,14 +448,23 @@ section::after {
     font-size: 1.2em;
 }
 
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
 .project-card {
     background: var(--bg-dark);
     border: 1px solid var(--border);
     padding: 35px;
     border-radius: 10px;
-    margin-bottom: 25px;
     transition: all 0.3s;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .project-card::before {
@@ -450,6 +475,7 @@ section::after {
     color: var(--accent-green);
     font-family: 'Courier New', monospace;
     font-size: 0.8em;
+    opacity: 0.6;
 }
 
 .project-card:hover {
@@ -465,10 +491,46 @@ section::after {
     margin-bottom: 20px;
 }
 
+.project-header > div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.featured-badge {
+    background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+    color: var(--bg-dark);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+}
+
+.project-card.featured {
+    border: 2px solid var(--accent-green);
+}
+
+.project-card.featured::before {
+    content: '// Featured Project';
+    color: var(--accent-green);
+    opacity: 1;
+}
+
 .project-card h3 {
     color: var(--accent-blue);
     font-size: 1.5em;
     font-family: 'Courier New', monospace;
+    margin: 0;
+}
+
+.project-card p {
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin: 20px 0;
+    flex-grow: 1;
+    font-size: 0.95em;
 }
 
 .github-link {
@@ -481,10 +543,20 @@ section::after {
     font-size: 0.9em;
     transition: all 0.3s;
     font-family: 'Courier New', monospace;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .github-link::before {
     content: 'git push ';
+}
+
+.github-link::after {
+    content: ' →';
+    opacity: 0.8;
+    font-size: 1.1em;
 }
 
 .github-link:hover {
@@ -552,7 +624,7 @@ section::after {
 
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmin(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     margin-top: 30px;
 }
@@ -630,5 +702,14 @@ footer::before {
         flex-direction: column;
         align-items: start;
         gap: 15px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
     }
 }
