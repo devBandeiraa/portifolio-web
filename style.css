@@ -59,6 +59,7 @@ header {
     text-align: center;
     padding: 80px 20px 60px;
     position: relative;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .code-comment {
@@ -122,6 +123,7 @@ h1 {
     margin-bottom: 10px;
     font-weight: 700;
     color: var(--text-primary);
+    transition: all 0.3s ease;
 }
 
 h1::before {
@@ -197,6 +199,7 @@ nav {
     top: 0;
     z-index: 100;
     backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
 }
 
 nav ul {
@@ -215,6 +218,9 @@ nav a {
     transition: color 0.3s;
     position: relative;
     font-family: 'Courier New', monospace;
+    cursor: pointer;
+    z-index: 101;
+    display: inline-block;
 }
 
 nav a::before {
@@ -224,6 +230,31 @@ nav a::before {
 
 nav a:hover {
     color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+nav a.active {
+    color: var(--accent-green);
+}
+
+nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-green);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 section {
@@ -234,6 +265,12 @@ section {
     border-radius: 12px;
     position: relative;
     animation: fadeInUp 0.6s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(57, 211, 83, 0.1);
 }
 
 @keyframes fadeInUp {
@@ -325,8 +362,9 @@ section::after {
     border: 1px solid var(--border);
     padding: 30px;
     border-radius: 10px;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     position: relative;
+    cursor: pointer;
 }
 
 .skill-category::before {
@@ -365,6 +403,7 @@ section::after {
     color: var(--text-primary);
     font-family: 'Courier New', monospace;
     font-size: 0.9em;
+    transition: all 0.3s ease;
 }
 
 .skill-category li::before {
@@ -460,11 +499,12 @@ section::after {
     border: 1px solid var(--border);
     padding: 35px;
     border-radius: 10px;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
     position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
+    cursor: pointer;
 }
 
 .project-card::before {
@@ -489,12 +529,15 @@ section::after {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .project-header > div {
     display: flex;
     align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .featured-badge {
@@ -563,6 +606,37 @@ section::after {
     background: var(--bg-hover);
     border-color: var(--accent-green);
     box-shadow: 0 0 15px rgba(57, 211, 83, 0.2);
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.github-link-multiple {
+    background: var(--bg-card);
+    color: var(--accent-green);
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85em;
+    transition: all 0.3s;
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+}
+
+.github-link-multiple:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-green);
+    box-shadow: 0 0 15px rgba(57, 211, 83, 0.2);
+    transform: translateY(-2px);
 }
 
 .tech-stack {
@@ -635,7 +709,8 @@ section::after {
     padding: 25px;
     border-radius: 10px;
     text-align: center;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .contact-card:hover {
@@ -684,6 +759,24 @@ footer::before {
     color: var(--accent-green);
 }
 
+/* Melhorias de interatividade */
+a, button {
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    filter: brightness(1.2);
+}
+
+/* Desabilita efeitos 3D em dispositivos móveis */
+@media (hover: none) and (pointer: coarse) {
+    .project-card,
+    .skill-category,
+    .contact-card {
+        transform: none !important;
+    }
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2em;
@@ -704,6 +797,17 @@ footer::before {
         gap: 15px;
     }
 
+    .project-links {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .github-link-multiple {
+        font-size: 0.8em;
+        padding: 8px 14px;
+        min-height: 36px;
+    }
+
     .projects-grid {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -711,5 +815,11 @@ footer::before {
 
     .skills-grid {
         grid-template-columns: 1fr;
+    }
+    
+    /* Desabilita efeitos de parallax no mobile */
+    header {
+        transform: none !important;
+        opacity: 1 !important;
     }
 }
